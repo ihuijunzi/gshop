@@ -1,62 +1,27 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Msite from '../pages/Msite/Msite'
-import Search from "../pages/Search/Search"
-import Order from "../pages/Order/Order"
-import Profile from "../pages/Profile/Profile"
-import Shop from '../pages/Shop/Shop'
-import Login from '../pages/Login/Login'
+import store from '../store'
+import routes from './routes'
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
-    routes:[
-        {
-            path:'/',
-            redirect:'/msite'
-        },
-        {
-            path:'/msite',
-            component:Msite,
-            meta: {
-                showFootGuide: true
-            }
-        },
-        {
-            path:'/search',
-            component:Search,
-            meta: {
-                showFootGuide: true
-            }
-        },
-        {
-            path:'/order',
-            component:Order,
-            meta: {
-                showFootGuide: true
-            }
-        },
-        {
-            path:'/profile',
-            component:Profile,
-            meta: {
-                showFootGuide: true
-            }
-        },
-        {
-            path:'/shop',
-            component:Shop,
-            // meta: {
-            //     showFootGuide: false
-            // }
-        },
-        {
-            path:'/login',
-            component:Login,
-            // meta: {
-            //     showFootGuide: false
-            // }
-        }
-    ]
-})
+const router = new VueRouter({
+    routes
+});
+
+// 进入a/b必须登陆, 如果没有登陆自动跳转到登陆
+const paths = ['/a', '/b']; // 需要进行登陆检查的path的数组
+
+router.beforeEach((to, from, next)=>{
+    // 如果目标path在paths中, 但用户没有登陆, 自动跳转到login
+    const path = to.path;
+    if (paths.indexOf(path)!==-1 && !store.state.user) {
+        next('/login')
+    } else {
+        // 其它情况, 放行
+        next()
+    }
+});
+
+export default router

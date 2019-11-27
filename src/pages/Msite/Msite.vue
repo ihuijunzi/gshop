@@ -1,16 +1,17 @@
 <template>
     <div class="msite">
         <HeaderTop title="深圳市南山区科技园">
-            <a class="header_search" slot="search">
+            <a class="header_search" slot="search" @click="$router.push('/search')">
                 <i class="iconfont icon-sousuo"></i>
             </a>
-            <a class="header_login" slot="login">
+            <a class="header_login" slot="login" @click="$router.push('/login')">
                 <span class="header_login_text">登录|注册</span>
             </a>
         </HeaderTop>
+
         <div class="miste-content-wrapper">
             <div class="miste-content">
-                <nav class="msite_nav border-1px">
+                <nav class="msite_nav">
                     <div class="swiper-container" v-if="categorys.length">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide" v-for="(categorysItem, index) in categorysArr" :key="index">
@@ -18,26 +19,40 @@
                                     <div class="food_container">
                                         <img :src="baseImageUrl + category.image_url">
                                     </div>
-                                    <span>甜品饮品</span>
+                                    <span>{{category.title}}</span>
                                 </a>
                             </div>
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
+<!--                    <div class="swiper-container" v-if="categorys.length">-->
+<!--                        <div class="swiper-wrapper">-->
+<!--                            <swiper :options="swiperOption">-->
+<!--                                <swiper-slide v-for="(categorysItem, index) in categorysArr" :key="index">-->
+<!--                                    <a href="javascript:void(0)" class="link_to_food" v-for="(category, idx) in categorysItem" :key="idx">-->
+<!--                                        <div class="food_container">-->
+<!--                                            <img :src="baseImageUrl + category.image_url">-->
+<!--                                        </div>-->
+<!--                                        <span>{{category.title}}</span>-->
+<!--                                    </a>-->
+<!--                                </swiper-slide>-->
+<!--                                <div class="swiper-pagination" slot="pagination"></div>-->
+<!--                            </swiper>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <img src="./images/msite_back.svg" v-else>
                 </nav>
+                <div class="msite_shop_list border-1px">
+                    <div class="shop_header">
+                        <i class="iconfont icon-xuanxiang"></i>
+                        <span class="shop_header_title">附近商家</span>
+                    </div>
+                    <ShopList></ShopList>
+                </div>
             </div>
         </div>
 
-        <div class="msite_shop_list border-1px">
-            <div class="shop_header">
-                <i class="iconfont icon-xuanxiang"></i>
-                <span class="shop_header_title">附近商家</span>
-            </div>
-            <div class="shop_container">
 
-            </div>
-        </div>
     </div>
 
 
@@ -45,16 +60,30 @@
 
 <script>
     import {mapState} from 'vuex'
-    import HeaderTop from '../../components/HeaderTop/HeaderTop'
     import Swiper from 'swiper';
+    import 'swiper/dist/css/swiper.min.css';
+    // import 'swiper/dist/css/swiper.css'
+    // import {swiper, swiperSlide} from 'vue-awesome-swiper';
+    import BScroll from 'better-scroll'
+
+    import HeaderTop from '../../components/HeaderTop/HeaderTop'
+    import ShopList from '../../components/ShopList/ShopList'
 
     export default {
         name: "Msite",
         components: {
-            HeaderTop
+            HeaderTop,
+            ShopList,
+            // swiper,
+            // swiperSlide
         },
         data(){
           return{
+              // swiperOption:{
+              //     pagination: {
+              //         el: '.swiper-pagination'
+              //     }
+              // },
               baseImageUrl :'https://fuss10.elemecdn.com'
           }
         },
@@ -82,25 +111,36 @@
                 });
 
                 return arr
-
-
             }
         },
         created(){
 
         },
-        mounted() {
-            this.$store.dispatch('getCategorys');
-
+        async mounted() {
+            this.$store.dispatch('getShops');
+            await this.$store.dispatch('getCategorys');
+            // new Swiper('.swiper-container', {
+            //     pagination: {
+            //         el: '.swiper-pagination',
+            //     },
+            //     loop: true
+            // });
         },
         watch:{
             categorys(){
                 this.$nextTick(()=>{
                     new Swiper('.swiper-container', {
-                        pagination: {el: '.swiper-pagination'},
+                        pagination: {
+                            el: '.swiper-pagination',
+                        },
                         loop: true
+                    });
+
+                    new BScroll('.miste-content-wrapper', {
+                        click: true
                     })
-                })
+                });
+
             }
         }
     }

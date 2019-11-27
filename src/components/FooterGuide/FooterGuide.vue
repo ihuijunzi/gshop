@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-show="$route.meta.showFootGuide">
         <footer class="footer_guide border-1px">
             <a href="javascript:void (0)" class="guide-item" :class="{on:currentPath('/msite')}" @click="goto('/msite')">
                 <span class="item-icon">
@@ -63,6 +63,7 @@
         bottom 0
         left 0
         display flex
+        background-color #ffffff
         .guide-item
             flex 1
             display flex

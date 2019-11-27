@@ -5,6 +5,8 @@ import Msite from '../pages/Msite/Msite'
 import Search from "../pages/Search/Search"
 import Order from "../pages/Order/Order"
 import Profile from "../pages/Profile/Profile"
+import Shop from '../pages/Shop/Shop'
+import Login from '../pages/Login/Login'
 
 Vue.use(VueRouter);
 
@@ -16,19 +18,45 @@ export default new VueRouter({
         },
         {
             path:'/msite',
-            component:Msite
+            component:Msite,
+            meta: {
+                showFootGuide: true
+            }
         },
         {
             path:'/search',
-            component:Search
+            component:Search,
+            meta: {
+                showFootGuide: true
+            }
         },
         {
             path:'/order',
-            component:Order
+            component:Order,
+            meta: {
+                showFootGuide: true
+            }
         },
         {
             path:'/profile',
-            component:Profile
+            component:Profile,
+            meta: {
+                showFootGuide: true
+            }
         },
+        {
+            path:'/shop',
+            component:Shop,
+            // meta: {
+            //     showFootGuide: false
+            // }
+        },
+        {
+            path:'/login',
+            component:Login,
+            // meta: {
+            //     showFootGuide: false
+            // }
+        }
     ]
 })

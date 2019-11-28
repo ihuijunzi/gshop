@@ -4,8 +4,11 @@ import Msite from '../pages/Msite/Msite'
 import Search from "../pages/Search/Search"
 import Order from "../pages/Order/Order"
 import Profile from "../pages/Profile/Profile"
-import Shop from '../pages/Shop/Shop'
 import Login from '../pages/Login/Login'
+import Shop from '../pages/Shop/Shop'
+import ShopGoods from '../pages/Shop/ShopGoods/ShopGoods'
+import ShopInfo from '../pages/Shop/ShopInfo/ShopInfo'
+import ShopRatings from '../pages/Shop/ShopRatings/ShopRatings'
 
 export default [
     {
@@ -43,6 +46,24 @@ export default [
     {
         path:'/shop',
         component:Shop,
+        children:[
+            {
+                path:'/goods',
+                component: ShopGoods
+            },
+            {
+                path:'/ratings',
+                component: ShopRatings
+            },
+            {
+                path:'/info',
+                component: ShopInfo
+            },
+            {
+                path:"",
+                redirect: "/shop/goods"
+            }
+        ]
         // meta: {
         //     showFootGuide: false
         // }

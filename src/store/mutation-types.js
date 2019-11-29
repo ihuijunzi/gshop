@@ -14,5 +14,6 @@ export const RECEIVE_ADDFOODCOUNT = 'receive_addfoodcount';
 
 export const RECEIVE_SUBFOODCOUNT = 'receive_subfoodcount';
 
+export const RECEIVE_CLEARCART = 'receive_clearcart';
 
 

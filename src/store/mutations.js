@@ -6,7 +6,8 @@ import {RECEIVE_CATEGORYS,
     RECEIVE_GOODS,
     RECEIVE_RATINGS,
     RECEIVE_ADDFOODCOUNT,
-    RECEIVE_SUBFOODCOUNT
+    RECEIVE_SUBFOODCOUNT,
+    RECEIVE_CLEARCART
 } from './mutation-types'
 
 export default {
@@ -48,4 +49,8 @@ export default {
         }
     },
 
+    [RECEIVE_CLEARCART](state){
+        state.cartFoods.forEach(food => food.count = 0);
+        state.cartFoods = [];
+    }
 }

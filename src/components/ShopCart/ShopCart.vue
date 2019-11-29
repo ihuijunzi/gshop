@@ -47,6 +47,7 @@
     import CartControl from '../CartControl/CartControl'
     import {mapGetters, mapState} from 'vuex'
     import BScroll from 'better-scroll'
+    import {MessageBox} from 'mint-ui'
     export default {
         name: "ShopCart",
         components:{
@@ -101,7 +102,9 @@
                 }
             },
             clearCart(){
-
+                MessageBox.confirm('请确认是否清空购物车').then(()=>{
+                    this.$store.dispatch('toClearCart')
+                }, ()=>{})
             }
         }
     }

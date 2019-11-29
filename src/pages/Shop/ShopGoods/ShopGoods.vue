@@ -62,7 +62,9 @@
         name: "ShopGoods",
         data(){
             return{
-                currentIndex:0
+                currentIndex:0,
+                scrollY: 0,//右侧滚动条滚动的距离，滚动时实时变化
+                tops:[],//右侧所有li的top值的集合，初始化后就不再改变
             }
         },
         components:{
@@ -75,14 +77,47 @@
         mounted(){
             this.$store.dispatch('getShopGoods');
             this.$nextTick(()=>{
-                new BScroll('.foods-wrapper', {
-                    click: true
-                })
+                this._initScroll();
+                this._initTops()
             })
         },
         methods:{
-            clickMenuItem(){
+            _initScroll(){
+                new BScroll('.menu-wrapper', {
+                    click: true
+                });
+                this.foodScroll = new BScroll('.foods-wrapper', {
+                    probeType:2,
+                    click: true
+                });
+                this.foodScroll.on('scroll', ({y})=>{
+                    this.scrollY = Math.abs(y)
+                });
+                this.foodScroll.on('scrollEnd', ({y})=>{
+                    this.scrollY = Math.abs(y)
+                })
+            },
+            _initTops(){
+                let tops = [];
+                let top = 0;
+                tops.push(top);
+                const lis = this.$refs.foodsUl.getElementsByClassName('food-list-hook');
+                Array.prototype.slice.call(lis).forEach( li =>{
+                    top += li.clientHeight;
+                    tops.push(top);
+                });
 
+                // for(let li of lis){
+                //     top += li.clientHeight;
+                //     tops.push(top)
+                // }
+                window.console.log(tops);
+                this.tops = tops
+            },
+            clickMenuItem(index){
+                const y = this.tops[index];
+                this.scrollY = y;
+                this.foodScroll.scrollTo(0, -y, 300)
             },
             showFood(){
 

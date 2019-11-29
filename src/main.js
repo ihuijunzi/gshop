@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import './mock/mockServe'
+
 Vue.config.productionTip = false;
 
 new Vue({

@@ -48,15 +48,15 @@ export default [
         component:Shop,
         children:[
             {
-                path:'/goods',
+                path:'/shop/goods',
                 component: ShopGoods
             },
             {
-                path:'/ratings',
+                path:'/shop/ratings',
                 component: ShopRatings
             },
             {
-                path:'/info',
+                path:'/shop/info',
                 component: ShopInfo
             },
             {

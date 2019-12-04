@@ -58,7 +58,7 @@ serve dist
 
 ### 6.
 ```
-git pull test re11111cover local brach
+git pull test re222222cover local brach
 
 
 ```

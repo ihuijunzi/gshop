@@ -55,3 +55,15 @@ npm install -g serve
 serve dist
 ```
 
+
+### 6.
+```
+git pull test recover local brach
+
+
+```
+
+
+
+
+
